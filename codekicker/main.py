@@ -14,14 +14,17 @@ target_features = [['versenden', 'verschicken', 'Email', 'Outlook', 'Thunderbird
                    ['']]
 
 
-def read_sentences_and_labels_from_file(paths):
+def load_test_data(paths):
     labels = []
+    class_names = []
     sentences = []
-    for path in paths:
-        labels.append(os.path.basename(path))
+    for i, path in enumerate(paths):
         with open(path, 'r') as f:
-            sentences.extend(f.readlines())
-    return sentences, labels
+            lines = f.readlines()
+            sentences.extend(lines)
+            class_names.append(os.path.basename(path))
+            labels.extend([i] * len(lines))
+    return sentences, labels, class_names
 
 
 def classified_sentences(results, sentences, labels):
@@ -32,11 +35,11 @@ def classified_sentences(results, sentences, labels):
 
 
 def main(paths):
-    sentences, labels = read_sentences_and_labels_from_file(paths)
+    sentences, labels, class_names = load_test_data(paths)
     features, vocabulary = extract_features_and_vocabulary(sentences)
     stemmed_target_features = [stem_words(target_feature) for target_feature in target_features]
     results = classify(stemmed_target_features, features, vocabulary)
-    print(classified_sentences(results, sentences))
+    pprint(classified_sentences(results, sentences, class_names))
     print("Precission: %s" % sklearn.metrics.precision_score(labels, results))
     print("Recall: %s" % sklearn.metrics.recall_score(labels, results))
 
