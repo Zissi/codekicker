@@ -1,5 +1,3 @@
-from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
-
 
 def get_frequency_in_sentence(word, sentence_features, vocabulary):
     try:
@@ -19,7 +17,7 @@ def classify_sentence(target_features, sentence_features, vocabulary):
     if max(target_feature_frequencies):
         return target_feature_frequencies.index(max(target_feature_frequencies))
     else:
-        # The last target class contains all sentences, which have no target features in comman with any target class.
+        # The last target class contains all sentences, which have no target features in common with any target class.
         return len(target_features) - 1
 
 

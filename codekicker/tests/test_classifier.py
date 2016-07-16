@@ -1,7 +1,8 @@
-from pytest import fixture
-
-from codekicker.classifier import get_frequency_in_sentence, sum_target_feature_frequencies, classify_sentence, classify
+from codekicker.classifier import (classify, classify_sentence,
+                                   get_frequency_in_sentence,
+                                   sum_target_feature_frequencies)
 from codekicker.preprocesser import extract_features_and_vocabulary
+from pytest import fixture
 
 
 @fixture

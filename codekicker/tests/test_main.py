@@ -1,8 +1,7 @@
 import os
 
-from pytest import fixture
-
 from codekicker.main import classified_sentences, load_test_data
+from pytest import fixture
 
 
 @fixture

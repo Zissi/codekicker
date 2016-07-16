@@ -3,7 +3,6 @@ from collections import defaultdict
 from pprint import pprint
 
 import sklearn
-
 from codekicker.classifier import classify
 from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
 
@@ -11,7 +10,7 @@ target_features = [['versenden', 'verschicken', 'Email', 'Outlook', 'Thunderbird
                    ['installieren', 'Installation', 'Admin', 'Setup', 'Adminrechte'],
                    ['Maus', 'Mauszeiger', 'Zeiger', 'Cursor', 'Trackpad', 'Mousepad'],
                    ['Installation', 'Powerpoint', 'Computer', 'Excel', 'Formattierung', 'abstürzen'],
-                   ['']]
+                   []]
 
 
 def load_test_data(paths):
@@ -39,6 +38,7 @@ def main(paths):
     features, vocabulary = extract_features_and_vocabulary(sentences)
     stemmed_target_features = [stem_words(target_feature) for target_feature in target_features]
     results = classify(stemmed_target_features, features, vocabulary)
+
     pprint(classified_sentences(results, sentences, class_names))
     print("Precission: %s" % sklearn.metrics.precision_score(labels, results))
     print("Recall: %s" % sklearn.metrics.recall_score(labels, results))

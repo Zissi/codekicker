@@ -1,7 +1,7 @@
 import numpy as np
-from pytest import fixture
 
-from codekicker.preprocesser import stem_words, extract_features_and_vocabulary
+from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
+from pytest import fixture
 
 
 @fixture
