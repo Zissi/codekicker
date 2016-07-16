@@ -1,12 +1,17 @@
 import os
 from collections import defaultdict
+from pprint import pprint
 
 import sklearn
 
 from codekicker.classifier import classify
 from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
 
-target_features = [[], []]
+target_features = [['versenden', 'verschicken', 'Email', 'Outlook', 'Thunderbird'],
+                   ['installieren', 'Installation', 'Admin', 'Setup', 'Adminrechte'],
+                   ['Maus', 'Mauszeiger', 'Zeiger', 'Cursor', 'Trackpad', 'Mousepad'],
+                   ['Installation', 'Powerpoint', 'Computer', 'Excel', 'Formattierung', 'abstürzen'],
+                   ['']]
 
 
 def read_sentences_and_labels_from_file(paths):
