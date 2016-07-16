@@ -16,7 +16,7 @@ def stemmed_words():
 
 @fixture
 def input_sentences():
-    return ['Eine Fehlermeldung „Sie benötigen benötigen Adminrechte“ poppt auf.',
+    return ['Eine Fehlermeldung „Sie benötigen benötigen Adminrechte“ poppt auf.\n',
             'Der Versendeladebalken stoppt.']
 
 @fixture
