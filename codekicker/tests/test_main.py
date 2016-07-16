@@ -2,7 +2,7 @@ import os
 
 from pytest import fixture
 
-from codekicker.main import classified_sentences, read_sentences_and_labels_from_file
+from codekicker.main import classified_sentences, load_test_data
 
 
 @fixture
@@ -35,4 +35,4 @@ def test_classified_sentences(results, sentences, expected_classified_sentences,
     assert classified_sentences(results, sentences, labels) == expected_classified_sentences
 
 def test_read_sentences_and_labels_from_file(paths):
-    assert read_sentences_and_labels_from_file(paths) == (['Ein Satz.\n', 'Zwei Sätze', 'Drei Sätze!'], ['file_1', 'file_2'])
+    assert load_test_data(paths) == (['Ein Satz.\n', 'Zwei Sätze', 'Drei Sätze!'], [0, 0, 1], ['file_1', 'file_2'])
