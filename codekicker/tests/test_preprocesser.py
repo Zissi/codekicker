@@ -30,7 +30,7 @@ def test_stem_words(words, stemmed_words):
 
 
 def test_extract_features(input_sentences, expected_vocabulary):
-    actual_features, actual_vocabulary = extract_features_and_vocabulary(input_sentences)
+    actual_features, actual_vocabulary, unused = extract_features_and_vocabulary(input_sentences)
     expected_features = np.array([
         [1, 1, 2, 0, 1, 1, 1, 1, 0, 0],
         [0, 0, 0, 1, 0, 0, 0, 0, 1, 1]

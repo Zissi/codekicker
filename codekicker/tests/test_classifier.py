@@ -16,7 +16,7 @@ def stemmed_target_features():
 
 @fixture
 def features(input_sentences):
-    return extract_features_and_vocabulary(input_sentences)[0]
+    return extract_features_and_vocabulary(input_sentences)[0].toarray()
 
 @fixture
 def vocabulary(input_sentences):

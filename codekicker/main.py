@@ -3,8 +3,11 @@ from collections import defaultdict
 from pprint import pprint
 
 import sklearn
+from sklearn.naive_bayes import MultinomialNB
+
 from codekicker.classifier import classify
-from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
+from codekicker.preprocesser import extract_features_and_vocabulary, stem_words, \
+    extract_features_and_vocabulary_for_testing, transform_to_tfidf
 
 target_features = [['versenden', 'verschicken', 'Email', 'Outlook', 'Thunderbird'],
                    ['installieren', 'Installation', 'Admin', 'Setup', 'Adminrechte'],
@@ -33,16 +36,36 @@ def classified_sentences(results, sentences, labels):
     return classified_sentences
 
 
-def main(paths):
+def classify_with_expert_knowledge(paths):
     sentences, labels, class_names = load_test_data(paths)
-    features, vocabulary = extract_features_and_vocabulary(sentences)
+    features, vocabulary, unused = extract_features_and_vocabulary(sentences)
     stemmed_target_features = [stem_words(target_feature) for target_feature in target_features]
-    results = classify(stemmed_target_features, features, vocabulary)
+    predicted = classify(stemmed_target_features, features.toarray(), vocabulary)
 
-    pprint(classified_sentences(results, sentences, class_names))
-    print("Precission: %s" % sklearn.metrics.precision_score(labels, results))
-    print("Recall: %s" % sklearn.metrics.recall_score(labels, results))
+    print('EXPERT KNOWLEDGE:')
+    pprint(classified_sentences(predicted, sentences, class_names))
+    print("Precission: %s" % sklearn.metrics.precision_score(labels, predicted))
+    print("Recall: %s" % sklearn.metrics.recall_score(labels, predicted))
 
+
+def classify_with_tf_idf(paths):
+    sentences, labels, class_names = load_test_data(paths)
+    train_sentences, test_sentences, train_labels, test_labels = sklearn.cross_validation.train_test_split(sentences,
+                                                                                                           labels,
+                                                                                                           test_size=0.2)
+    train_features, vocabulary, count_vectorizer = extract_features_and_vocabulary(train_sentences)
+    train_tfidf_features = transform_to_tfidf(train_features)
+
+    clf = MultinomialNB().fit(train_tfidf_features, train_labels)
+
+    test_features = extract_features_and_vocabulary_for_testing(test_sentences, count_vectorizer)
+    test_tfidf_features = transform_to_tfidf(test_features)
+    predicted = clf.predict(test_tfidf_features)
+
+    print('TF-IDF')
+    pprint(classified_sentences(predicted, sentences, class_names))
+    print("Precission: %s" % sklearn.metrics.precision_score(test_labels, predicted))
+    print("Recall: %s" % sklearn.metrics.recall_score(test_labels, predicted))
 
 if __name__ == '__main__':
     import argparse
@@ -53,4 +76,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    main(args.paths)
+    classify_with_expert_knowledge(args.paths)
+    classify_with_tf_idf(args.paths)
