@@ -20,8 +20,10 @@ def extract_features_and_vocabulary(sentences):
     count_vectorizer = CountVectorizer(analyzer="word", tokenizer=StemmingTokenizer(), preprocessor=None)
     return count_vectorizer.fit_transform(sentences), count_vectorizer.vocabulary_, count_vectorizer
 
-def extract_features_and_vocabulary_for_testing(sentences, count_vectorizer):
+
+def extract_features_for_testing(sentences, count_vectorizer):
     return count_vectorizer.transform(sentences)
+
 
 def transform_to_tfidf(features):
     tfidf_transformer = TfidfTransformer()

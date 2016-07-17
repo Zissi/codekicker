@@ -9,11 +9,12 @@ from codekicker.classifier import classify
 from codekicker.preprocesser import extract_features_and_vocabulary, stem_words, \
     extract_features_and_vocabulary_for_testing, transform_to_tfidf
 
-target_features = [['versenden', 'verschicken', 'Email', 'Outlook', 'Thunderbird'],
-                   ['installieren', 'Installation', 'Admin', 'Setup', 'Adminrechte'],
-                   ['Maus', 'Mauszeiger', 'Zeiger', 'Cursor', 'Trackpad', 'Mousepad'],
-                   ['Installation', 'Powerpoint', 'Computer', 'Excel', 'Formattierung', 'abstürzen'],
-                   []]
+import sklearn
+from codekicker.classifier import TARGET_FEATURES, classify, predict_with_svc
+from codekicker.evaluation import (evaluate_classification,
+                                   evaluate_complete_classification)
+from codekicker.preprocesser import (extract_features_and_vocabulary,
+                                     stem_words, transform_to_tfidf)
 
 
 def load_test_data(paths):
@@ -55,9 +56,7 @@ def classify_with_tf_idf(paths):
                                                                                                            test_size=0.2)
     train_features, vocabulary, count_vectorizer = extract_features_and_vocabulary(train_sentences)
     train_tfidf_features = transform_to_tfidf(train_features)
-
     clf = MultinomialNB().fit(train_tfidf_features, train_labels)
-
     test_features = extract_features_and_vocabulary_for_testing(test_sentences, count_vectorizer)
     test_tfidf_features = transform_to_tfidf(test_features)
     predicted = clf.predict(test_tfidf_features)

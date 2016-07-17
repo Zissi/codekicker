@@ -35,5 +35,5 @@ def test_extract_features(input_sentences, expected_vocabulary):
         [1, 1, 2, 0, 1, 1, 1, 1, 0, 0],
         [0, 0, 0, 1, 0, 0, 0, 0, 1, 1]
     ])
-    actual_vocabulary == expected_vocabulary
+    assert actual_vocabulary == expected_vocabulary
     assert (actual_features == expected_features).all()
