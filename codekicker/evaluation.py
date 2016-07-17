@@ -24,3 +24,9 @@ def evaluate_classification(predicted, labels, sentences, class_names):
     print("Recall: %s" % recall)
     print("Average recall: %s" % average_recall)
     return average_precision, average_recall
+
+def evaluate_complete_classification(average_precisions, average_recalls,):
+    mean_average_precision = np.mean(average_precisions)
+    mean_average_recall = np.mean(average_recalls)
+    print('Mean average precision: %s' % mean_average_precision)
+    print('Mean average recall: %s' % mean_average_recall)

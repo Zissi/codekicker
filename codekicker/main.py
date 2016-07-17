@@ -34,20 +34,23 @@ def classify_with_expert_knowledge(paths):
 
 def classify_with_tf_idf(paths):
     sentences, labels, class_names = load_test_data(paths)
-    train_sentences, test_sentences, train_labels, test_labels = sklearn.cross_validation.train_test_split(sentences,
-                                                                                                           labels,
-                                                                                                           test_size=0.2)
-    train_features, vocabulary, count_vectorizer = extract_features_and_vocabulary(train_sentences)
-    train_tfidf_features = transform_to_tfidf(train_features)
-    clf = MultinomialNB().fit(train_tfidf_features, train_labels)
-    test_features = extract_features_and_vocabulary_for_testing(test_sentences, count_vectorizer)
-    test_tfidf_features = transform_to_tfidf(test_features)
-    predicted = clf.predict(test_tfidf_features)
+    sentences = np.array(sentences)
+    labels = np.array(labels)
+    average_precisions = []
+    average_recalls = []
+    for train_index, test_index in sklearn.cross_validation.StratifiedKFold(labels, n_folds=3):
+        sentences_train, sentences_test = sentences[train_index], sentences[test_index]
+        labels_train, labels_test = labels[train_index], labels[test_index]
+        features_train, vocabulary, count_vectorizer = extract_features_and_vocabulary(sentences_train)
+        tfidf_features_train = transform_to_tfidf(features_train)
+        predicted = predict_with_svc(tfidf_features_train, labels_train, sentences_test, count_vectorizer)
 
-    print('TF-IDF')
-    pprint(classified_sentences(predicted, sentences, class_names))
-    print("Precission: %s" % sklearn.metrics.precision_score(test_labels, predicted))
-    print("Recall: %s" % sklearn.metrics.recall_score(test_labels, predicted))
+        print('TF-IDF')
+        average_precision, average_recall = evaluate_classification(predicted, labels_test, sentences, class_names)
+        average_precisions.append(average_precision)
+        average_recalls.append(average_recall)
+    evaluate_complete_classification(average_precisions, average_recalls)
+
 
 if __name__ == '__main__':
     import argparse
