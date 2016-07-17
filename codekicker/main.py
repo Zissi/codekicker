@@ -1,13 +1,6 @@
 import os
-from collections import defaultdict
-from pprint import pprint
 
-import sklearn
-from sklearn.naive_bayes import MultinomialNB
-
-from codekicker.classifier import classify
-from codekicker.preprocesser import extract_features_and_vocabulary, stem_words, \
-    extract_features_and_vocabulary_for_testing, transform_to_tfidf
+import numpy as np
 
 import sklearn
 from codekicker.classifier import TARGET_FEATURES, classify, predict_with_svc
@@ -30,23 +23,13 @@ def load_test_data(paths):
     return sentences, labels, class_names
 
 
-def classified_sentences(results, sentences, labels):
-    classified_sentences = defaultdict(list)
-    for classification, sentence in zip(results, sentences):
-        classified_sentences[labels[classification]].append(sentence)
-    return classified_sentences
-
-
 def classify_with_expert_knowledge(paths):
     sentences, labels, class_names = load_test_data(paths)
     features, vocabulary, unused = extract_features_and_vocabulary(sentences)
-    stemmed_target_features = [stem_words(target_feature) for target_feature in target_features]
+    stemmed_target_features = [stem_words(target_feature) for target_feature in TARGET_FEATURES]
     predicted = classify(stemmed_target_features, features.toarray(), vocabulary)
-
     print('EXPERT KNOWLEDGE:')
-    pprint(classified_sentences(predicted, sentences, class_names))
-    print("Precission: %s" % sklearn.metrics.precision_score(labels, predicted))
-    print("Recall: %s" % sklearn.metrics.recall_score(labels, predicted))
+    evaluate_classification(predicted, labels, sentences, class_names)
 
 
 def classify_with_tf_idf(paths):
