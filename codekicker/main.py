@@ -55,10 +55,12 @@ def classify_with_tf_idf(paths):
 if __name__ == '__main__':
     import argparse
 
-    parser = argparse.ArgumentParser(description="", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description="This script reads the given paths and classifies the sentences found there"
+                                                 " in two different ways. For each method the average precision and recall"
+                                                 " are reported.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('paths', metavar="path", nargs='+', type=str,
-                        help="")
-
+                        help="Path to a file containing sentences for a single class. "
+                             "Filename will be used as class name")
     args = parser.parse_args()
 
     classify_with_expert_knowledge(args.paths)
