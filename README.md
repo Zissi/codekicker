@@ -1,4 +1,4 @@
-# codekicker
+# NLP example
 
 ## Overview
 This script reads the given paths and classifies the sentences found using two methods: [Expert knowledge](#expert_knowledge) and [Tf-idf](#tfidf).
