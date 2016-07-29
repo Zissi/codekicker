@@ -1,4 +1,4 @@
-from codekicker.evaluation import classified_sentences
+from nlpexample.evaluation import classified_sentences
 from pytest import fixture
 
 

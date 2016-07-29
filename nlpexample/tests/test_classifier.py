@@ -1,7 +1,7 @@
-from codekicker.classifier import (classify, classify_sentence,
+from nlpexample.classifier import (classify, classify_sentence,
                                    get_frequency_in_sentence,
                                    sum_target_feature_frequencies)
-from codekicker.preprocesser import extract_features_and_vocabulary
+from nlpexample.preprocesser import extract_features_and_vocabulary
 from pytest import fixture
 
 

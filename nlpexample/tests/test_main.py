@@ -1,6 +1,6 @@
 import os
 
-from codekicker.main import load_test_data
+from nlpexample.main import load_test_data
 from pytest import fixture
 
 

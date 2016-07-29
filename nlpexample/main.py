@@ -3,10 +3,10 @@ import os
 import numpy as np
 
 import sklearn
-from codekicker.classifier import TARGET_FEATURES, classify, predict_with_svc
-from codekicker.evaluation import (evaluate_classification,
+from nlpexample.classifier import TARGET_FEATURES, classify, predict_with_svc
+from nlpexample.evaluation import (evaluate_classification,
                                    evaluate_complete_classification)
-from codekicker.preprocesser import (extract_features_and_vocabulary,
+from nlpexample.preprocesser import (extract_features_and_vocabulary,
                                      stem_words, transform_to_tfidf)
 
 

@@ -1,4 +1,4 @@
-from codekicker.preprocesser import (extract_features_for_testing,
+from nlpexample.preprocesser import (extract_features_for_testing,
                                      transform_to_tfidf)
 from sklearn.svm import LinearSVC
 

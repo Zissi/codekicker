@@ -1,6 +1,6 @@
 import numpy as np
 
-from codekicker.preprocesser import extract_features_and_vocabulary, stem_words
+from nlpexample.preprocesser import extract_features_and_vocabulary, stem_words
 from pytest import fixture
 
 
